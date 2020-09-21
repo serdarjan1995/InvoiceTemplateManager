@@ -1,0 +1,57 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Upload Template and Csv file. Then click "Generate"</p>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <form enctype="multipart/form-data" method="post">
+                <div class="form-group">
+                    <label asp-for="FileUpload.FormFile"></label>
+                    <input asp-for="FileUpload.FormFile" type="file" accept=".txt,.csv">
+                    @if (!Model._templateUploaded)
+                    {
+                        <input asp-page-handler="Upload" class="btn btn-primary" type="submit" value="Upload Template" />
+                    }
+                    else
+                    {
+                        <input asp-page-handler="Upload" class="btn btn-secondary" type="submit" value="Upload Csv" />
+                    }
+                </div>
+                <div class="form-group">
+                    <div class="alert alert-danger">
+                        <span asp-validation-for="FileUpload.FormFile"></span>
+                    </div>
+                </div>
+            </form>
+
+            <div class="alert alert-warning" role="alert">
+                @Model.Message
+            </div>
+            @if (Model._invoiceFilesSuccess){
+                <a href="/FileListing" class="btn btn-success">Show Files</a>
+            }
+        </div>
+        <div class="col">
+            @if (Model._templateUploaded)
+            {
+                <pre style="background-color: antiquewhite;"> @Model._templateContent  </pre>
+                <a href="/RemoveTemplate" class="btn btn-danger">Remove</a>
+            }
+            else
+            {
+                <pre style="background-color: antiquewhite;">
+                Template has not been uploaded yet
+            </pre>
+            }
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,17 @@
+﻿@page
+@model FileListingModel
+@{
+    ViewData["Title"] = "File Listing";
+}
+<h1>@ViewData["Title"]</h1>
+
+<p>Use this page to detail your site's privacy policy.</p>
+
+<ol>
+    @foreach (var x in Model.FileList)
+    {
+        <li><a href="~/Files/@x">@x</a></li>
+    }
+</ol>
+
+<a href="/RemoveFiles" class="btn btn-danger">Remove Files</a>
